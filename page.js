@@ -1,4 +1,3 @@
-
 window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
@@ -19,13 +18,14 @@ function messageReceived(message) {
     case 'call':
       invitation_popup(message);
       chrome.storage.local.set({participating: false});
-      //2 minute timer
-      chrome.storage.local.set({popuptime: Date.now() + 120000});
 
       break;
 
     case 'match':
       message_popup(message);
+
+      console.log(1);
+
       chrome.storage.local.set({participating: false});
       break;
   }
@@ -52,13 +52,14 @@ function eventResponse(answer) {
     var j = {
       "email": email,
       "answer": true
-    }
+    };
 
     jQuery.ajax({
       type: "POST",
       url: apiUrl + "/api/response",
       data: JSON.stringify(j),
       success: function (response) {
+
       }
     });
   });
@@ -96,11 +97,34 @@ function message_popup(message) {
   });
 
 }
+/*
+function RepeatMessage(id) {
+  chrome.storage.local.get("participating", function (result) {
+    setInterval(function () {
+      if (!result.participating) {
+        console.log('repeat');
+        chrome.notifications.update(id, {priority: 1}, function (wasUpdated) {
+          if (wasUpdated) {
+            chrome.notifications.update(id, {priority: 2}, function () {
+            });
+          } else {
+          }
+        });
+      }
+    }, 2000);
 
-chrome.notifications.update(id, {priority : 1}, function(wasUpdated) {
-  if(wasUpdated) {
-    chrome.notifications.update(id, {priority : 2}, function() {});
-  } else {
-    // Notification was fully closed; either stop updating or create a new one
-  }
-});
+  });
+
+}*/
+
+function outDated() {
+
+  chrome.notifications.create("", {
+    title: 'Time out!',
+    iconUrl: 'ic_launcher.png',
+    type: 'basic',
+    message: 'Time out!'
+  }, function (id) {
+    myNotificationID = id;
+  });
+}
