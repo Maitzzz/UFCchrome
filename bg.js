@@ -142,6 +142,17 @@ function view_message() {
   $('#message').show();
 }
 
+/**
+ * View if user participates in game
+ */
+function view_participating() {
+  $('#view_timer').hide();
+  $('#view_play').hide();
+  $('#view_register').hide();
+
+  $('#view_participating').show();
+}
+
 
 function action_play() {
   var senderId = "874260943469";
@@ -203,6 +214,7 @@ $(document).ready(function () {
               return console.log('error');
             }
             if(ret) {
+
               view_timer();
             } else {
               view_play();
@@ -212,7 +224,6 @@ $(document).ready(function () {
         }
       });
 
-      //view_game();
     } else {
       view_register();
     }
@@ -297,3 +308,39 @@ function timer_on(callback) {
     }
   });
 }
+
+function praticipating(callback) {
+  chrome.storage.local.get('email', function(data) {
+    var email = data.email;
+
+    var data = {
+      'email': email
+    };
+
+    jQuery.ajax({
+      type: 'POST',
+      url: apiUrl + ':3000/participating',
+      data: data,
+      success: function (response) {
+        callback(false, response);
+      },
+      error: function() {
+        callback(true);
+      }
+    });
+  });
+
+}
+
+/*
+
+praticipating(function(err, ret) {
+  if (err) {
+    return console.log('error');
+  }
+  if(ret) {
+    view_participating();
+  } else {
+
+  }
+});*/
