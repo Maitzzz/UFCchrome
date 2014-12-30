@@ -2,6 +2,8 @@ window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
 
+var apiUrl = 'http://ufc.mait.fenomen.ee';
+
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
   var id = Math.floor(Math.random() * 9007199254740992) + 1;
@@ -17,16 +19,12 @@ function messageReceived(message) {
 
     case 'call':
       invitation_popup(message);
-      chrome.storage.local.set({participating: false});
 
       break;
 
     case 'match':
       message_popup(message);
-
       console.log(1);
-
-      chrome.storage.local.set({participating: false});
       break;
   }
 
@@ -47,19 +45,26 @@ function eventResponse(answer) {
   chrome.storage.local.get("email", function (result) {
     var email = result["email"];
 
-    var apiUrl = 'http://ufcdev.mait.fenomen.ee';
-
     var j = {
-      "email": email,
-      "answer": true
+      'email': email,
+      'answer': true
     };
 
     jQuery.ajax({
-      type: "POST",
-      url: apiUrl + "/api/response",
+      type: 'POST',
+      url: apiUrl + ':3000/iam-in',
+      dataType:'json',
+      contentType: "application/json",
       data: JSON.stringify(j),
-      success: function (response) {
+      success: function(response) {
+        console.log(response);
 
+        if (response && response.result) {
+          view_iam_in();
+        }
+        else {
+          action_message('Mängija lisamine ebaõnnestus!');
+        }
       }
     });
   });
@@ -97,25 +102,10 @@ function message_popup(message) {
   });
 
 }
-/*
-function RepeatMessage(id) {
-  chrome.storage.local.get("participating", function (result) {
-    setInterval(function () {
-      if (!result.participating) {
-        console.log('repeat');
-        chrome.notifications.update(id, {priority: 1}, function (wasUpdated) {
-          if (wasUpdated) {
-            chrome.notifications.update(id, {priority: 2}, function () {
-            });
-          } else {
-          }
-        });
-      }
-    }, 2000);
 
-  });
 
-}*/
+//todo ???ZZz
+/*window.init = function() {*/
 
 function outDated() {
 
@@ -128,3 +118,23 @@ function outDated() {
     myNotificationID = id;
   });
 }
+
+/*chrome.browserAction.onClicked.addListener(function () {
+
+  timer_on(function(err, ret) {
+    if (err) {
+      return console.log('errro');
+    }
+
+    if(ret) {
+      chrome.windows.create({
+        'url': 'popup.html',
+        'type': 'popup'
+      }, function (window) {
+      });
+    } else {
+      chrome.browserAction.setPopup({ popup: 'popup.html'});
+    }
+
+  });
+});*/

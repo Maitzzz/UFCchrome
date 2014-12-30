@@ -2,16 +2,16 @@
   "name": "A browser action with a popup that changes the page color",
   "description": "Change the current page color",
   "version": "1.0",
-  "permissions": ["gcm", "storage", "notifications","notifications","http://ufcdev.mait.fenomen.ee/api/subscribe"],
+  "permissions": ["gcm", "storage", "notifications","notifications","http://ufc.mait.fenomen.ee/*"],
   "browser_action": {
     "default_title": "Set this page's color.",
     "default_icon": "icon.jpg",
-    "default_popup" : "popup.html"
+    "default_popup": "popup.html"
   },
   "manifest_version": 2,
   "background":
   {
-    "scripts": ["page.js","jquery.min.js"]
+    "scripts": ["jquery.min.js","page.js"]
   },
 
   "content_scripts": [{
