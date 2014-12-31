@@ -197,25 +197,35 @@ $(document).ready(function () {
 
   player_registered(function (err, ret) {
     if(err) {
-      return console.log('error');
+      return console.log('error palyer registered');
     }
     //registered or not
     if(ret.result) {
       //is game on?
       game_on(function (err, ret) {
         if(err) {
-          return console.log('error');
+          return console.log('error game on');
         }
         if(ret.result) {
           view_game();
         } else {
           timer_on(function(err, ret) {
             if (err) {
-              return console.log('error');
+              return console.log('error timer on');
             }
             if(ret) {
 
-              view_timer();
+              praticipating(function(err, ret) {
+                if (err) {
+                  return console.log('error');
+                }
+                if(ret) {
+                  //view_participating();
+                  action_message('Osaled juba loosimises');
+                } else {
+                  view_timer();
+                }
+              });
             } else {
               view_play();
             }
@@ -312,6 +322,7 @@ function timer_on(callback) {
 function praticipating(callback) {
   chrome.storage.local.get('email', function(data) {
     var email = data.email;
+    //var email = "test@tst.ee";
 
     var data = {
       'email': email
@@ -331,16 +342,3 @@ function praticipating(callback) {
   });
 
 }
-
-/*
-
-praticipating(function(err, ret) {
-  if (err) {
-    return console.log('error');
-  }
-  if(ret) {
-    view_participating();
-  } else {
-
-  }
-});*/
