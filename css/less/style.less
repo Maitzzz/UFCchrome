@@ -10,16 +10,21 @@ body {
   width: 30px;
 }
 
-#view_play button {
-  color: #ffffff;
-  background-color: #e31377;
-  border: none;
-  padding: 5px;
-  width: 150px;
+#view_play {
+  button {
+    color: #ffffff;
+    background-color: #e31377;
+    border: none;
+    padding: 5px;
+    width: 150px;
 
+    &:hover {
+      background-color: #bd1063;
+    }
+  }
 
-  &:hover {
-    background-color: #bd1063;
+  .user .name {
+    font-size: 15px;
   }
 }
 
@@ -35,11 +40,6 @@ body {
   &:hover {
     background-color: #bd1063;
   }
-}
-
-#view_play .user .name {
-  font-size: 15px;
-
 }
 
 .title {
@@ -65,7 +65,7 @@ body {
 }
 
 #view_timer .text {
-text-align: center;
+  text-align: center;
 }
 
 #view_game {
@@ -76,7 +76,7 @@ text-align: center;
   text-align: center;
 
   .vs {
-  font-weight: bold;
+    font-weight: bold;
     font-size: 20px;
     padding-bottom: 5px;
     padding-top: 5px;
@@ -92,5 +92,12 @@ text-align: center;
     font-weight: bold;
     margin-bottom: 5px;
   }
+}
 
+#view_participating {
+  #ptimer {
+    margin-top: 5px ;
+    font-size: 20px;
+    text-align: center;
+  }
 }

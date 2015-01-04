@@ -1,4 +1,7 @@
 UFCchrome
 =========
 
-UFC chrome notification 
+UFC chrome notification for Fenomen.
+
+Depends on UFC  and node server.
+

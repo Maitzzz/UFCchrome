@@ -17,6 +17,9 @@ body {
 #view_play button:hover {
   background-color: #bd1063;
 }
+#view_play .user .name {
+  font-size: 15px;
+}
 .btn {
   color: #ffffff;
   background-color: #e31377;
@@ -28,9 +31,6 @@ body {
 }
 .btn:hover {
   background-color: #bd1063;
-}
-#view_play .user .name {
-  font-size: 15px;
 }
 .title {
   text-align: center;
@@ -73,13 +73,8 @@ body {
   font-weight: bold;
   margin-bottom: 5px;
 }
-
-#view_register .text  {
-  margin-top: 5px;
-}
-
 #view_participating #ptimer {
+  margin-top: 5px ;
   font-size: 20px;
   text-align: center;
 }
-
