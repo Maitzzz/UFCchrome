@@ -20,7 +20,7 @@ function messageReceived(message) {
 
     case 'call':
       invitation_popup(message);
-      createBadge('Game');
+      createBadge(':)');
       break;
 
     case 'match':
@@ -32,18 +32,15 @@ function messageReceived(message) {
       createBadge('');
       break;
   }
-
 }
 
 // Set up a listener for GCM message event.
 chrome.gcm.onMessage.addListener(messageReceived);
 
 function notificationBtnClick(notID, iBtn) {
-
   if (iBtn == 0) {
     eventResponse(0);
   }
-
 }
 
 function eventResponse(answer) {
@@ -63,11 +60,7 @@ function eventResponse(answer) {
       data: JSON.stringify(j),
       success: function(response) {
         console.log(response);
-
         if (response && response.result) {
-
-        }
-        else {
 
         }
       }
@@ -86,10 +79,8 @@ function invitation_popup(message) {
     message: message.data.message,
     buttons: [{
       title: "Mängin"
-
     }, {
       title: "Ei mängi"
-
     }]
   }, function (id) {
     myNotificationID = id;
@@ -105,7 +96,6 @@ function message_popup(message) {
   }, function (id) {
     myNotificationID = id;
   });
-
 }
 
 function outDated() {

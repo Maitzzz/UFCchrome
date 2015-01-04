@@ -1,19 +1,14 @@
 var apiUrl = 'http://ufc.mait.fenomen.ee';
-//todo 1) stress test bugi 3)  messages 4)error drupalis
 
 function registerCallback(chrome_token) {
   if (chrome.runtime.lastError) {
     return;
   }
-
-  chrome.storage.local.set({registered: true});
-
   register(chrome_token);
 }
 
 function register(chrome_token) {
   var email = $('#view_register .email').val();
-
   // Save user E-mail
   chrome.storage.local.set({email: email});
 
@@ -59,13 +54,10 @@ function play(email) {
       }
     }
   });
-
 }
-
 
 function action_register() {
   var senderId = "874260943469";
-
   chrome.gcm.register([senderId], registerCallback);
 }
 
@@ -73,10 +65,7 @@ function action_register() {
  * view register window
  */
 function view_register() {
-  $('#view_game').hide();
-  $('#view_play').hide();
-  $('#view_spin').hide();
-  $('#view_timer').hide();
+  $('.view').hide();
 
   $('#view_register').show();
 }
@@ -91,7 +80,6 @@ function view_play() {
   });
   $('#view_play').show();
 }
-
 
 /**
  * view timer
@@ -155,14 +143,14 @@ function view_participating() {
 }
 
 function view_error() {
-  view_message('Ei saa serveriga ühendust');
+  view_message('Ei saa serveriga ühendust')
 }
 
 function action_play(email) {
   action_iam_in(email);
+
   play(email);
 }
-
 
 function action_iam_in(email) {
   var data = {
@@ -302,7 +290,6 @@ function praticipating(callback) {
       }
     });
   });
-
 }
 
 function removePlayer(email) {
@@ -394,7 +381,6 @@ function time_left(callback) {
       callback(true);
     }
   });
-
 }
 
 function view() {
@@ -417,7 +403,7 @@ function view() {
           view_game(ret.result);
         } else {
           timer_on(function (err, ret) {
-            createBadge('Game');
+            createBadge(':)');
             if (err) {
               console.log('error timer on');
               view_error();
