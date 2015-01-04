@@ -4,36 +4,49 @@
   <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="jquery.min.js"></script>
-    <script src="bg.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bg.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
 
     <div id="view_register" class="view" style="display: none">
-      Email: <input class="email" type="text" size="20" value="mait@fenomen.ee"><br/>
-      <button class="register">Register</button>
+      Email: <input class="email" type="text" size="20"><br/>
+      <div class="message"></div>
+      <button class="register btn">Register</button>
     </div>
 
     <div id="view_play" class="view" style="display: none">
-      <button class="play">Create game</button>
+      <div class="title">Fenomen UFC</div>
+      <div class="user"> Sisseloginud kasutajaga: <span class="name"></span></div>
+      <button class="play btn">Create game</button>
     </div>
 
     <div id="view_timer" class="view" style="display: none">
-      Timer...
-      <button class="iam-in">I'm in!</button>
+      <div class="message"></div>
+      <div class="text">Aega loosimise lõpuni:</div>
+      <div id="timer">Timer</div>
+      <button class="iam-in btn">I'm in!</button>
     </div>
 
-    <div id="view_participating" style="display: none">
-      Osaled loosimises
+    <div id="view_participating" class="view" style="display: none">
+     <div class="text">Osaled loosimises</div>
+      <div class="message"></div>
+      <div id="ptimer">Timer</div>
+      <button class="iam-out btn">I'm out!</button>
     </div>
 
-    <div id="view_game" style="display: none">
-      Tema & tema & Tema & tema
+    <div id="view_game" style="display: none" class="view">
+      <div class="text"> Ongoing game:</div>
+      <span class="team_1_1 player"></span> & <span class="team_1_2 player"></span><div class="vs">VS</div><span class="team_2_1 player"></span> & <span class="team_2_2 player"></span>
     </div>
 
+    <div id="view_spin" class="view" style="display: none">
+      <img src="images/3.GIF"/>
+    </div>
 
-    <div id="message" class="view" style="display: block">
+    <div id="view_message" class="view" style="display: none">
+      <div class="message"></div>
     </div>
   </body>
 </html>

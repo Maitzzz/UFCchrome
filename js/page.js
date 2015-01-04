@@ -15,16 +15,21 @@ function messageReceived(message) {
   switch (message.data.type) {
     case 'fail':
       message_popup(message);
+      createBadge('');
       break;
 
     case 'call':
       invitation_popup(message);
-
+      createBadge('Game');
       break;
 
     case 'match':
       message_popup(message);
-      console.log(1);
+      createBadge('');
+      break;
+
+    case 'end':
+      createBadge('');
       break;
   }
 
@@ -60,10 +65,10 @@ function eventResponse(answer) {
         console.log(response);
 
         if (response && response.result) {
-          view_iam_in();
+
         }
         else {
-          action_message('Mängija lisamine ebaõnnestus!');
+
         }
       }
     });
@@ -76,7 +81,7 @@ function eventResponse(answer) {
 function invitation_popup(message) {
   chrome.notifications.create("", {
     title: message.data.title,
-    iconUrl: 'ic_launcher.png',
+    iconUrl: '../images/ic_launcher.png',
     type: 'basic',
     message: message.data.message,
     buttons: [{
@@ -94,7 +99,7 @@ function invitation_popup(message) {
 function message_popup(message) {
   chrome.notifications.create("", {
     title: message.data.title,
-    iconUrl: 'ic_launcher.png',
+    iconUrl: '../images/ic_launcher.png',
     type: 'basic',
     message: message.data.message
   }, function (id) {
@@ -103,15 +108,11 @@ function message_popup(message) {
 
 }
 
-
-//todo ???ZZz
-/*window.init = function() {*/
-
 function outDated() {
 
   chrome.notifications.create("", {
     title: 'Time out!',
-    iconUrl: 'ic_launcher.png',
+    iconUrl: '../images/ic_launcher.png',
     type: 'basic',
     message: 'Time out!'
   }, function (id) {
@@ -119,22 +120,7 @@ function outDated() {
   });
 }
 
-/*chrome.browserAction.onClicked.addListener(function () {
-
-  timer_on(function(err, ret) {
-    if (err) {
-      return console.log('errro');
-    }
-
-    if(ret) {
-      chrome.windows.create({
-        'url': 'popup.html',
-        'type': 'popup'
-      }, function (window) {
-      });
-    } else {
-      chrome.browserAction.setPopup({ popup: 'popup.html'});
-    }
-
-  });
-});*/
+function createBadge(message) {
+  chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
+  chrome.browserAction.setBadgeText({text:message});
+}

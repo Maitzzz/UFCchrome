@@ -1,0 +1,85 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#status {
+  display: none;
+}
+#view_spin img {
+  width: 30px;
+}
+#view_play button {
+  color: #ffffff;
+  background-color: #e31377;
+  border: none;
+  padding: 5px;
+  width: 150px;
+}
+#view_play button:hover {
+  background-color: #bd1063;
+}
+.btn {
+  color: #ffffff;
+  background-color: #e31377;
+  border: none;
+  padding: 5px;
+  width: 150px;
+  font-weight: normal;
+  margin-top: 10px;
+}
+.btn:hover {
+  background-color: #bd1063;
+}
+#view_play .user .name {
+  font-size: 15px;
+}
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 17px;
+  padding-bottom: 5px;
+}
+.text {
+  font-size: 15px;
+  text-align: center;
+}
+#view_message .message {
+  font-size: 15px;
+  text-align: center;
+}
+#view_timer #timer {
+  font-size: 20px;
+  text-align: center;
+}
+#view_timer .text {
+  text-align: center;
+}
+#view_game {
+  width: 180px;
+}
+#view_game {
+  text-align: center;
+}
+#view_game .vs {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+#view_game .player {
+  font-size: 15px;
+}
+#view_game .text {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#view_register .text  {
+  margin-top: 5px;
+}
+
+#view_participating #ptimer {
+  font-size: 20px;
+  text-align: center;
+}
+

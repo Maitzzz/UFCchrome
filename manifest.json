@@ -1,27 +1,28 @@
 {
-  "name": "A browser action with a popup that changes the page color",
-  "description": "Change the current page color",
-  "version": "1.0",
-  "permissions": ["gcm", "storage", "notifications","notifications","http://ufc.mait.fenomen.ee/*"],
+  "name": "UFC",
+  "description": "UFC",
+  "version": "0.1",
+  "permissions": ["gcm", "storage", "notifications"],
+  "icons": { "128": "images/ic_launcher.png" },
   "browser_action": {
-    "default_title": "Set this page's color.",
-    "default_icon": "icon.jpg",
-    "default_popup": "popup.html"
+    "default_title": "UFC",
+    "default_icon": "images/ic_launcher.png",
+    "default_popup":"popup.html"
   },
   "manifest_version": 2,
   "background":
   {
-    "scripts": ["jquery.min.js","page.js"]
+    "scripts": ["js/jquery.min.js","js/page.js"]
   },
 
   "content_scripts": [{
     "js": [
-      "jquery.min.js",
-      "jquery-ui.min.js",
-      "bg.js"
+      "js/page.js"
     ],
-    "css": [ "jquery-ui.css" ],
+    "css": [ "css/empty.css" ],
+    "run_at": "document_start",
     "matches": [ "<all_urls>" ]
 
   }]
 }
+
