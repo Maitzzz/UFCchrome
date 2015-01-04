@@ -17,7 +17,7 @@
 
   "content_scripts": [{
     "js": [
-      "js/page.js"
+      "js/js.js"
     ],
     "css": [ "css/empty.css" ],
     "run_at": "document_start",
