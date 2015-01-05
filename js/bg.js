@@ -25,7 +25,7 @@ function register(chrome_token) {
       console.log(response);
 
       if (response && response.result) {
-        view();
+       view();
       }
       else {
         $('.message', '#view_register').text('Registreerimine ebaõnnestus!');
@@ -34,7 +34,7 @@ function register(chrome_token) {
   });
 }
 
-function play(email) {
+function play(email, type) {
   var data = {
     'email': email
   };
@@ -47,10 +47,12 @@ function play(email) {
       console.log(response);
 
       if (response && response.result) {
-        view();
+        if(type) {
+          view();
+        }
       }
       else {
-        action_message('Mängu loomine ebaõnnestus');
+        view_message('Mängu loomine ebaõnnestus');
       }
     }
   });
@@ -147,12 +149,13 @@ function view_error() {
 }
 
 function action_play(email) {
-  action_iam_in(email);
+  view_spin();
+  action_iam_in(email, false);
 
-  play(email);
+  play(email, true);
 }
 
-function action_iam_in(email) {
+function action_iam_in(email, state) {
   var data = {
     'email': email
   };
@@ -167,7 +170,9 @@ function action_iam_in(email) {
       console.log(response);
 
       if (response) {
-        view();
+        if(state){
+         view();
+        }
       }
       else {
         action_message('Lisaine ebaõnnestus!');
@@ -198,7 +203,7 @@ $(document).ready(function () {
 
   $('#view_timer button.iam-in').click(function () {
     chrome.storage.local.get('email', function (data) {
-      action_iam_in(data.email);
+      action_iam_in(data.email, true);
     });
   });
 });
@@ -308,15 +313,13 @@ function removePlayer(email) {
       console.log(response);
 
       if (response) {
-        view_timer();
+        view();
       }
       else {
         action_message('Ebaõnnestus!');
       }
     }
   });
-  view();
-
 }
 
 function getPlayers(callback) {
@@ -348,6 +351,15 @@ function countdown(elementName, minutes, seconds) {
   }
 
   function updateTimer() {
+    getCount(function (err, ret3) {
+      if (err) {
+        console.log('tile left error');
+      }
+      if (ret3)  {
+        $('.count-nr','.count').text(ret3);
+      }
+
+    });
     msLeft = endTime - (+new Date);
     if (msLeft < 1000) {
       view_message("Time's UP!");
@@ -362,6 +374,7 @@ function countdown(elementName, minutes, seconds) {
 
   element = document.getElementById(elementName);
   endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
+
   updateTimer();
 }
 
@@ -394,23 +407,23 @@ function view() {
     //registered or not
     if (ret.result) {
       //is game on?
-      game_on(function (err, ret) {
+      game_on(function (err, ret1) {
         if (err) {
           return console.log('error game on');
         }
-        if (ret.result) {
+        if (ret1.result) {
           createBadge('');
-          view_game(ret.result);
+          view_game(ret1.result);
         } else {
-          timer_on(function (err, ret) {
+          timer_on(function (err, ret4) {
             createBadge(':)');
             if (err) {
-              console.log('error timer on');
+              console.log('error timer on ' + ret4);
               view_error();
               return;
             }
-
-            if (ret) {
+            if (ret4) {
+              console.log('Timer on' + ret4);
               praticipating(function (err, ret2) {
                 if (err) {
                   console.log('error');
@@ -441,4 +454,23 @@ function view() {
 function createBadge(message) {
   chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
   chrome.browserAction.setBadgeText({text:message});
+}
+
+function getCount(callback) {
+  var data = {
+    'test': 'test'
+  };
+
+  jQuery.ajax({
+    type: 'POST',
+    url: apiUrl + ':3000/get-count',
+    data: data,
+    success: function (response) {
+      console.log(response);
+      callback(false, response);
+    },
+    error: function () {
+      callback(true);
+    }
+  });
 }
