@@ -1,4 +1,5 @@
-var apiUrl = 'http://ufc.mait.fenomen.ee';
+var apiUrl = 'http://ufc.fenomen.ee';
+var nodeUrl = 'http://192.168.1.2';
 
 function registerCallback(chrome_token) {
   if (chrome.runtime.lastError) {
@@ -162,7 +163,7 @@ function action_iam_in(email, state) {
 
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + ':3000/iam-in',
+    url: nodeUrl + ':3000/iam-in',
     dataType: 'json',
     contentType: "application/json",
     data: JSON.stringify(data),
@@ -258,7 +259,7 @@ function timer_on(callback) {
   };
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + ':3000/timer-running',
+    url: nodeUrl + ':3000/timer-running',
     dataType: 'json',
     contentType: "application/json",
     data: JSON.stringify(data),
@@ -285,7 +286,7 @@ function praticipating(callback) {
 
     jQuery.ajax({
       type: 'POST',
-      url: apiUrl + ':3000/participating',
+      url: nodeUrl + ':3000/participating',
       data: data,
       success: function (response) {
         callback(false, response);
@@ -305,7 +306,7 @@ function removePlayer(email) {
 
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + ':3000/iam-out',
+    url: nodeUrl + ':3000/iam-out',
     dataType: 'json',
     contentType: "application/json",
     data: JSON.stringify(data),
@@ -385,7 +386,7 @@ function time_left(callback) {
 
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + ':3000/time-left',
+    url: nodeUrl + ':3000/time-left',
     data: data,
     success: function (response) {
       callback(false, response);
@@ -463,7 +464,7 @@ function getCount(callback) {
 
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + ':3000/get-count',
+    url: nodeUrl + ':3000/get-count',
     data: data,
     success: function (response) {
       console.log(response);

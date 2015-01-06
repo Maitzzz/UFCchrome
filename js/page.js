@@ -2,7 +2,7 @@ window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
 
-var apiUrl = 'http://ufc.mait.fenomen.ee';
+var nodeUrl = 'http://192.168.1.2';
 
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
@@ -54,7 +54,7 @@ function eventResponse(answer) {
 
     jQuery.ajax({
       type: 'POST',
-      url: apiUrl + ':3000/iam-in',
+      url: nodeUrl + ':3000/iam-in',
       dataType:'json',
       contentType: "application/json",
       data: JSON.stringify(j),
