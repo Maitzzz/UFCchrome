@@ -1,5 +1,13 @@
-var apiUrl = 'http://ufc.fenomen.ee';
-var nodeUrl = 'http://192.168.1.2';
+/**
+   var apiUrl = 'http://ufc.fenomen.ee';
+   var nodeUrl = 'http://192.168.1.2';
+ */
+/**
+ var nodeUrl = 'http://ufc.mait.fenomen.ee';
+ var apiUrl = 'http://ufc.mait.fenomen.ee';
+ */
+var nodeUrl = 'http://ufc.mait.fenomen.ee';
+var apiUrl = 'http://ufc.mait.fenomen.ee';
 
 function registerCallback(chrome_token) {
   if (chrome.runtime.lastError) {
@@ -330,7 +338,7 @@ function getPlayers(callback) {
 
   jQuery.ajax({
     type: 'POST',
-    url: apiUrl + 'api/get-players',
+    url: apiUrl + '/api/get-players',
     dataType: 'json',
     contentType: "application/json",
     data: JSON.stringify(data),
@@ -358,6 +366,8 @@ function countdown(elementName, minutes, seconds) {
       }
       if (ret3)  {
         $('.count-nr','.count').text(ret3);
+        createBadge(ret3);
+
       }
 
     });
@@ -453,7 +463,7 @@ function view() {
 
 
 function createBadge(message) {
-  chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
+  chrome.browserAction.setBadgeBackgroundColor({color:[0, 255, 0, 255]});
   chrome.browserAction.setBadgeText({text:message});
 }
 

@@ -2,7 +2,18 @@ window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
 
-var nodeUrl = 'http://192.168.1.2';
+/** LIVE SEIS
+ * var nodeUrl = 'http://ufc.mait.fenomen.ee';
+ * @type {string}
+ */
+
+
+/** ARENDUS SEIS
+  var nodeUrl = 'http://192.168.1.2';
+ */
+
+var nodeUrl = 'http://ufc.mait.fenomen.ee';
+var status;
 
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
@@ -20,7 +31,9 @@ function messageReceived(message) {
 
     case 'call':
       invitation_popup(message);
-      createBadge(':)');
+      status = true;
+      badgeLoop();
+
       break;
 
     case 'match':
@@ -30,6 +43,7 @@ function messageReceived(message) {
 
     case 'end':
       createBadge('');
+      status = false;
       break;
   }
 }
@@ -111,6 +125,43 @@ function outDated() {
 }
 
 function createBadge(message) {
-  chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
+  chrome.browserAction.setBadgeBackgroundColor({color:[0, 255, 0, 255]});
   chrome.browserAction.setBadgeText({text:message});
 }
+
+function badgeLoop() {
+  var loop = setInterval(function () {
+      getCount(function (err, ret3) {
+        if (err) {
+          console.log('tile left error');
+        }
+        if (ret3 && ret3 != 'false') {
+          createBadge(ret3);
+        }else {
+          window.clearTimeout(loop);
+        }
+      });
+  }, 5000);
+}
+
+function getCount(callback) {
+  var data = {
+    'test': 'test'
+  };
+
+  jQuery.ajax({
+    type: 'POST',
+    url: nodeUrl + ':3000/get-count',
+    data: data,
+    success: function (response) {
+      callback(false, response);
+    },
+    error: function () {
+      callback(true);
+    }
+  });
+}
+
+$(document).ready(function () {
+    badgeLoop();
+});
