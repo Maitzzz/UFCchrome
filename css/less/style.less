@@ -1,103 +1,151 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+  font-family: Tahoma, Geneva, sans-serif;
+  min-width: 180px;
+  transition: all 0.8s;
 
-#status {
-  display: none;
-}
-
-#view_spin img {
-  width: 30px;
-}
-
-#view_play {
-  button {
-    color: #ffffff;
-    background-color: #e31377;
-    border: none;
-    padding: 5px;
+  #header-wrapper {
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 5px;
+    clear: both;
     width: 150px;
+    font-size: 15px;
+    height: 20px;
+    -webkit-animation: titleAnimation 0.8s;
 
-    &:hover {
-      background-color: #bd1063;
+
+    .header-menu {
+      span {
+        margin:0px;
+        margin-left: 20px;
+        padding: 5px;
+        background: red;
+      }
+    }
+
+  }
+  #content-wrapper {
+    width: 180px;
+    #status {
+      display: none;
+    }
+    #view_spin img {
+      width: 50px;
+    }
+    #view_spin {
+      width: 33px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #view_play {
+      button {
+        color: #ffffff;
+        background-color: #e31377;
+        border: none;
+        padding: 5px;
+
+        &:hover {
+          background-color: #bd1063;
+        }
+      }
+
+      .user .name {
+        font-size: 15px;
+      }
+    }
+
+    .btn {
+      color: #ffffff;
+      background-color: #e31377;
+      border: none;
+      padding: 5px;
+      width: 100%;
+      font-weight: normal;
+      margin-top: 10px;
+
+      &:hover {
+        background-color: #bd1063;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 17px;
+      padding-bottom: 5px
+    }
+
+    .text {
+      font-size: 15px;
+      text-align: center;
+    }
+
+    #view_message .message {
+      font-size: 15px;
+      text-align: center;
+    }
+
+    #view_timer #timer {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    #view_timer .text {
+      text-align: center;
+    }
+
+    #view_game {
+      text-align: center;
+      width: 250px;
+
+      .vs {
+        font-weight: bold;
+        font-size: 20px;
+        padding-bottom: 5px;
+        padding-top: 12px;
+        width: 30px;
+        float: left;
+      }
+
+      .teams {
+        width: 110px;
+        float: left;
+        margin-bottom: 10px;
+      }
+
+      .player {
+        font-size: 15px;
+      }
+
+      .text {
+        font-size: 15px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+    }
+
+    #view_participating {
+      #ptimer {
+        margin-top: 5px;
+        font-size: 20px;
+        text-align: center;
+      }
     }
   }
+}
 
-  .user .name {
-    font-size: 15px;
+
+
+@-webkit-keyframes titleAnimation {
+  0%,10% {
+    opacity: 0;
+    -webkit-transform: translateY(-4px);
   }
-}
-
-.btn {
-  color: #ffffff;
-  background-color: #e31377;
-  border: none;
-  padding: 5px;
-  width: 150px;
-  font-weight: normal;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: #bd1063;
+  80%{
+    -webkit-transform: translateY(0);
   }
-}
+  100% {
+    opacity: 1;
 
-.title {
-  text-align: center;
-  font-weight: bold;
-  font-size: 17px;
-  padding-bottom: 5px
-}
-
-.text {
-  font-size: 15px;
-  text-align: center;
-}
-
-#view_message .message {
-  font-size: 15px;
-  text-align: center;
-}
-
-#view_timer #timer {
-  font-size: 20px;
-  text-align: center;
-}
-
-#view_timer .text {
-  text-align: center;
-}
-
-#view_game {
-  width: 180px;
-}
-
-#view_game {
-  text-align: center;
-
-  .vs {
-    font-weight: bold;
-    font-size: 20px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-
-  }
-
-  .player {
-    font-size: 15px;
-  }
-
-  .text {
-    font-size: 15px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-}
-
-#view_participating {
-  #ptimer {
-    margin-top: 5px ;
-    font-size: 20px;
-    text-align: center;
   }
 }

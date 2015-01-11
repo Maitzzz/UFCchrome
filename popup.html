@@ -1,55 +1,91 @@
 <!DOCTYPE html>
 
 <html>
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bg.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-  </head>
-  <body>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bg.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div id="header-wrapper">
+  <div class="header-menu">
+    <span class="game">Game</span>
+    <span class="score">Score</span>
+  </div>
+</div>
+<div id="content-wrapper">
+  <div id="view_register" class="view" style="display: none">
+    Email: <input class="email" type="text" size="20"><br/>
 
-    <div id="view_register" class="view" style="display: none">
-      Email: <input class="email" type="text" size="20"><br/>
-      <div class="message"></div>
-      <button class="register btn">Register</button>
-    </div>
+    <div class="message"></div>
+    <button class="register btn">Register</button>
+  </div>
 
-    <div id="view_play" class="view" style="display: none">
-      <div class="title">Fenomen UFC</div>
-      <div class="user">Login User: <span class="name"></span></div>
-      <button class="play btn">Create game</button>
-    </div>
+  <div id="view_play" class="view" style="display: none">
+    <div class="user">Login User: <span class="name"></span></div>
+    <button class="play btn">Create game</button>
+  </div>
 
-    <div id="view_timer" class="view" style="display: none">
-      <div class="message"></div>
-      <div class="text">You are not participating</div>
-      <div id="timer">Timer</div>
-      <div class="count">Player count: <span class="count-nr"></span></div>
-      <button class="iam-in btn">I'm in!</button>
-    </div>
+  <div id="view_timer" class="view" style="display: none">
+    <div class="message"></div>
+    <div class="text">You are not participating</div>
+    <div id="timer">Timer</div>
+    <div class="count">Player count: <span class="count-nr"></span></div>
+    <button class="iam-in btn">I'm in!</button>
+  </div>
 
-    <div id="view_participating" class="view" style="display: none">
-     <div class="text">You are participating</div>
-      <div class="message"></div>
-      <div id="ptimer">Timer</div>
-      <div class="count">Player count: <span class="count-nr"></span></div>
-      <button class="iam-out btn">I'm out!</button>
-    </div>
+  <div id="view_participating" class="view" style="display: none">
+    <div class="text">You are participating</div>
+    <div class="message"></div>
+    <div id="ptimer">Timer</div>
+    <div class="count">Player count: <span class="count-nr"></span></div>
+    <button class="iam-out btn">I'm out!</button>
+  </div>
 
-    <div id="view_game" style="display: none" class="view">
-      <div class="text"> Ongoing game:</div>
-      <span class="team_1_1 player"></span> & <span class="team_1_2 player"></span><div class="vs">VS</div><span class="team_2_1 player"></span> & <span class="team_2_2 player"></span>
-    </div>
+  <div id="view_game" style="display: none" class="view">
+    <div class="text"> Ongoing game:</div>
+    <div class="team_1 teams">
+      <span class="team_1_1 player"></span>
 
-    <div id="view_spin" class="view" style="display: none">
-      <img src="images/3.gif"/>
-    </div>
+      <div class="and"> &</div>
+      <span class="team_1_2 player"></span>
+      <button class="win btn">Win</button>
 
-    <div id="view_message" class="view" style="display: none">
-      <div class="message"></div>
     </div>
-  </body>
+    <div class="vs">VS</div>
+    <div class="team_2 teams">
+      <span class="team_2_1 player"></span>
+
+      <div class="and"> &</div>
+      <span class="team_2_2 player"></span>
+      <button class="win btn">Win</button>
+
+    </div>
+  </div>
+
+  <div id="view_spin" class="view" style="display: none">
+    <img src="images/3.gif"/>
+  </div>
+
+  <div id="view_message" class="view" style="display: none">
+    <div class="message"></div>
+  </div>
+</div>
+
+<div id="score-wrapper"  class="view" style="display: none">
+  <div class="score">
+    <table id="score">
+      <tr>
+        <td>Name</td>
+        <td>Score</td>
+      </tr>
+
+    </table>
+
+  </div>
+</div>
+</body>
 </html>
 

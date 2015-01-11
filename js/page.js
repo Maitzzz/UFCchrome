@@ -139,6 +139,7 @@ function badgeLoop() {
           createBadge(ret3);
         }else {
           window.clearTimeout(loop);
+          createBadge('');
         }
       });
   }, 5000);

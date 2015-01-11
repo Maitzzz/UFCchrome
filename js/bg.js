@@ -76,20 +76,23 @@ function action_register() {
  * view register window
  */
 function view_register() {
-  $('.view').hide();
+  $('#view_spin').hide();
+  $('.view').fadeOut();
 
-  $('#view_register').show();
+  $('#view_register').fadeIn();
 }
 
 /**
  * Show create game view
  */
 function view_play() {
-  $('.view').hide();
+
+  $('#view_spin').hide();
+  $('.view').fadeOut();
   chrome.storage.local.get('email', function (data) {
     $('.name', '#view_play').text(data.email);
   });
-  $('#view_play').show();
+  $('#view_play').fadeIn();
 }
 
 /**
@@ -97,6 +100,7 @@ function view_play() {
  * view yes/no button
  */
 function view_timer() {
+  $('#view_spin').hide();
   $('.view').hide();
   time_left(function (err, ret3) {
     if (err) {
@@ -105,7 +109,7 @@ function view_timer() {
     countdown('timer', ret3.minutes, ret3.seconds);
   });
 
-  $('#view_timer').show();
+  $('#view_timer').fadeIn();
 }
 
 /**
@@ -122,35 +126,68 @@ function view_spin() {
  * view current game participants
  */
 function view_game(data) {
-  $('.view').hide();
+  $('#view_spin').hide();
+  $('.view').fadeOut();
 
   $('.team_1_1', '#view_game').text(data[0][0]);
   $('.team_1_2', '#view_game').text(data[0][1]);
   $('.team_2_1', '#view_game').text(data[1][0]);
   $('.team_2_2', '#view_game').text(data[1][1]);
 
-  $('#view_game').show();
+  $('#view_game').fadeIn();
+}
+
+function view_score() {
+
+  $('.view').fadeOut();
+  $('#game-wrapper').fadeOut();
+  $('#score-wrapper').hide();
+  getScore(function (err, ret3) {
+    if (err) {
+      console.log('tile left error');
+    }
+    var rows = document.getElementById("score").getElementsByTagName("tr").length;
+    if (ret3 && rows == 1) {
+      var array = ret3.result.reverse();
+      var table = document.getElementById("score");
+      var arrayLength = array.length;
+      for (var i = 0; i < arrayLength; i++) {
+        // alert(myStringArray[i]);
+        var row = table.insertRow(i+1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = array[i].player;
+        cell2.innerHTML = array[i].score;
+
+      }
+    }
+    $('#score-wrapper').fadeIn(1000);
+  });
+
+
+
 }
 
 function view_message(message) {
+  $('#view_spin').hide();
   $('.view').hide();
-
   $('.message', '#view_message').text(message);
-  $('#view_message').show();
+  $('#view_message').fadeIn();
 }
 
 /**
  * View if user participates in game
  */
 function view_participating() {
-  $('.view').hide();
+  $('#view_spin').hide();
+  $('.view').fadeOut();
   time_left(function (err, ret3) {
     if (err) {
       console.log('tile left error');
     }
     countdown('ptimer', ret3.minutes, ret3.seconds);
   });
-  $('#view_participating').show();
+  $('#view_participating').fadeIn();
 }
 
 function view_error() {
@@ -215,6 +252,25 @@ $(document).ready(function () {
       action_iam_in(data.email, true);
     });
   });
+
+  $('.team_1 .win').click(function () {
+    $.get(apiUrl + '/ajax/match/current/team/red/thumbs-up');
+    view();
+  });
+
+  $('.team_2 .win').click(function () {
+    $.get(apiUrl + '/ajax/match/current/team/blue/thumbs-up');
+    view();
+  });
+
+  $('.header-menu .score').click(function () {
+    view_score();
+  });
+
+  $('.header-menu .game').click(function () {
+    view();
+  });
+
 });
 
 function player_registered(stateCallback) {
@@ -365,15 +421,16 @@ function countdown(elementName, minutes, seconds) {
         console.log('tile left error');
       }
       if (ret3)  {
-        $('.count-nr','.count').text(ret3);
-        createBadge(ret3);
-
+        if(ret3 != 'false') {
+          $('.count-nr','.count').text(ret3);
+          createBadge(ret3);
+        }
       }
 
     });
     msLeft = endTime - (+new Date);
-    if (msLeft < 1000) {
-      view_message("Time's UP!");
+    if (msLeft < 100) {
+        view_message("Time's UP!");
     } else {
       time = new Date(msLeft);
       hours = time.getUTCHours();
@@ -468,16 +525,24 @@ function createBadge(message) {
 }
 
 function getCount(callback) {
-  var data = {
-    'test': 'test'
-  };
-
   jQuery.ajax({
     type: 'POST',
     url: nodeUrl + ':3000/get-count',
-    data: data,
     success: function (response) {
       console.log(response);
+      callback(false, response);
+    },
+    error: function () {
+      callback(true);
+    }
+  });
+}
+
+function getScore(callback) {
+  jQuery.ajax({
+    type: 'POST',
+    url: apiUrl + '/api/get-score',
+    success: function (response) {
       callback(false, response);
     },
     error: function () {

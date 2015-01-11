@@ -1,80 +1,122 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Tahoma, Geneva, sans-serif;
+  min-width: 180px;
+  transition: all 0.8s;
 }
-#status {
+body #header-wrapper {
+  border-bottom: 1px solid #cccccc;
+  margin-bottom: 5px;
+  clear: both;
+  width: 150px;
+  font-size: 15px;
+  height: 20px;
+  -webkit-animation: titleAnimation 0.8s;
+}
+body #header-wrapper .header-menu span {
+  margin: 0px;
+  margin-left: 20px;
+  padding: 5px;
+  background: red;
+}
+body #content-wrapper {
+  width: 180px;
+}
+body #content-wrapper #status {
   display: none;
 }
-#view_spin img {
-  width: 30px;
+body #content-wrapper #view_spin img {
+  width: 50px;
 }
-#view_play button {
+body #content-wrapper #view_spin {
+  width: 33px;
+  margin-left: auto;
+  margin-right: auto;
+}
+body #content-wrapper #view_play button {
   color: #ffffff;
   background-color: #e31377;
   border: none;
   padding: 5px;
-  width: 150px;
 }
-#view_play button:hover {
+body #content-wrapper #view_play button:hover {
   background-color: #bd1063;
 }
-#view_play .user .name {
+body #content-wrapper #view_play .user .name {
   font-size: 15px;
 }
-.btn {
+body #content-wrapper .btn {
   color: #ffffff;
   background-color: #e31377;
   border: none;
   padding: 5px;
-  width: 150px;
+  width: 100%;
   font-weight: normal;
   margin-top: 10px;
 }
-.btn:hover {
+body #content-wrapper .btn:hover {
   background-color: #bd1063;
 }
-.title {
+body #content-wrapper .title {
   text-align: center;
   font-weight: bold;
   font-size: 17px;
   padding-bottom: 5px;
 }
-.text {
+body #content-wrapper .text {
   font-size: 15px;
   text-align: center;
 }
-#view_message .message {
+body #content-wrapper #view_message .message {
   font-size: 15px;
   text-align: center;
 }
-#view_timer #timer {
+body #content-wrapper #view_timer #timer {
   font-size: 20px;
   text-align: center;
 }
-#view_timer .text {
+body #content-wrapper #view_timer .text {
   text-align: center;
 }
-#view_game {
-  width: 180px;
-}
-#view_game {
+body #content-wrapper #view_game {
   text-align: center;
+  width: 250px;
 }
-#view_game .vs {
+body #content-wrapper #view_game .vs {
   font-weight: bold;
   font-size: 20px;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 12px;
+  width: 30px;
+  float: left;
 }
-#view_game .player {
+body #content-wrapper #view_game .teams {
+  width: 110px;
+  float: left;
+  margin-bottom: 10px;
+}
+body #content-wrapper #view_game .player {
   font-size: 15px;
 }
-#view_game .text {
+body #content-wrapper #view_game .text {
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 5px;
 }
-#view_participating #ptimer {
-  margin-top: 5px ;
+body #content-wrapper #view_participating #ptimer {
+  margin-top: 5px;
   font-size: 20px;
   text-align: center;
+}
+@-webkit-keyframes titleAnimation {
+  0%,
+  10% {
+    opacity: 0;
+    -webkit-transform: translateY(-4px);
+  }
+  80% {
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+  }
 }
