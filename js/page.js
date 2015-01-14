@@ -1,8 +1,20 @@
+/** LIVE SEIS
+ * var nodeUrl = 'http://ufc.mait.fenomen.ee';
+ * @type {string}
+ */
+
+/** ARENDUS SEIS
+  var nodeUrl = 'http://192.168.1.2';
+ */
+
+var nodeUrl = 'http://192.168.1.2';
+var status;
+
+document.write('<audio id="player" src="http://ufc.fenomen.ee/sites/default/files/sound.mp3"></audio>');
+
 window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
-
-var apiUrl = 'http://ufc.mait.fenomen.ee';
 
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
@@ -20,16 +32,29 @@ function messageReceived(message) {
 
     case 'call':
       invitation_popup(message);
-      createBadge(':)');
+      status = true;
+      badgeLoop();
+      chrome.storage.local.get('mute', function (data) {
+        if(!data.mute){
+          document.getElementById('player').play();
+        }
+      });
       break;
 
     case 'match':
       message_popup(message);
       createBadge('');
+      mute();
       break;
 
     case 'end':
+      mute();
       createBadge('');
+      status = false;
+      break;
+
+    case 'mute':
+      mute();
       break;
   }
 }
@@ -38,6 +63,7 @@ function messageReceived(message) {
 chrome.gcm.onMessage.addListener(messageReceived);
 
 function notificationBtnClick(notID, iBtn) {
+  document.getElementById('player').pause();
   if (iBtn == 0) {
     eventResponse(0);
   }
@@ -54,7 +80,7 @@ function eventResponse(answer) {
 
     jQuery.ajax({
       type: 'POST',
-      url: apiUrl + ':3000/iam-in',
+      url: nodeUrl + ':3000/iam-in',
       dataType:'json',
       contentType: "application/json",
       data: JSON.stringify(j),
@@ -66,9 +92,6 @@ function eventResponse(answer) {
       }
     });
   });
-
-  //set answeret TRUE
-  chrome.storage.local.set({participating: true});
 }
 
 function invitation_popup(message) {
@@ -111,6 +134,48 @@ function outDated() {
 }
 
 function createBadge(message) {
-  chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
+  chrome.browserAction.setBadgeBackgroundColor({color:[0, 255, 0, 255]});
   chrome.browserAction.setBadgeText({text:message});
+}
+
+function badgeLoop() {
+  var loop = setInterval(function () {
+      getCount(function (err, ret3) {
+        if (err) {
+          console.log('tile left error');
+        }
+        if (ret3 && ret3 != 'false') {
+          createBadge(ret3);
+        }else {
+          window.clearTimeout(loop);
+          createBadge('');
+        }
+      });
+  }, 5000);
+}
+
+function getCount(callback) {
+  var data = {
+    'test': 'test'
+  };
+
+  jQuery.ajax({
+    type: 'POST',
+    url: nodeUrl + ':3000/get-count',
+    data: data,
+    success: function (response) {
+      callback(false, response);
+    },
+    error: function () {
+      callback(true);
+    }
+  });
+}
+
+$(document).ready(function () {
+    badgeLoop();
+});
+
+function mute() {
+  document.getElementById('player').pause();
 }

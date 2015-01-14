@@ -1,55 +1,116 @@
 <!DOCTYPE html>
 
 <html>
-  <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bg.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-  </head>
-  <body>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="js/jquery-2.0.3.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <script src="js/bg.js"></script>
+  <link href="css/style.css" rel="stylesheet" media="screen">
 
-    <div id="view_register" class="view" style="display: none">
-      Email: <input class="email" type="text" size="20"><br/>
-      <div class="message"></div>
-      <button class="register btn">Register</button>
-    </div>
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="http://ufc.fenomen.ee" target="_blank">UFC</a>
+  </div>
+  <div class="collapse navbar-collapse header-menu">
+    <ul class="nav navbar-nav">
+      <li class="active game">
+        <i class="glyphicon glyphicon-home"><span>Game</span></i>
+      </li>
+      <li class="score">
+        <i class="glyphicon glyphicon glyphicon-list"><span>Score</span></i>
+      </li>
+      <li class="volume">
+        <i class="glyphicon glyphicon glyphicon-volume-up"></i>
 
-    <div id="view_play" class="view" style="display: none">
-      <div class="title">Fenomen UFC</div>
-      <div class="user">Login User: <span class="name"></span></div>
-      <button class="play btn">Create game</button>
-    </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div id="content-wrapper">
+  <div id="view_register" class="view" style="display: none">
+    <p>Register</p>
 
-    <div id="view_timer" class="view" style="display: none">
-      <div class="message"></div>
-      <div class="text">You are not participating</div>
-      <div id="timer">Timer</div>
-      <div class="count">Player count: <span class="count-nr"></span></div>
-      <button class="iam-in btn">I'm in!</button>
+    <div class="input-group register">
+      <span class="input-group-addon">@</span>
+      <input class="email form-control" placeholder="Email" type="text"
+             size="20">
     </div>
+    <div class="message alert alert-danger" style="display: none"></div>
+    <button class="register btn">Register</button>
+  </div>
 
-    <div id="view_participating" class="view" style="display: none">
-     <div class="text">You are participating</div>
-      <div class="message"></div>
-      <div id="ptimer">Timer</div>
-      <div class="count">Player count: <span class="count-nr"></span></div>
-      <button class="iam-out btn">I'm out!</button>
-    </div>
+  <div id="view_play" class="view" style="display: none">
+    <div class="user"><i class="glyphicon glyphicon-user"></i> <span class="name"></span></div>
+    <button class="play btn">Create game</button>
+  </div>
 
-    <div id="view_game" style="display: none" class="view">
-      <div class="text"> Ongoing game:</div>
-      <span class="team_1_1 player"></span> & <span class="team_1_2 player"></span><div class="vs">VS</div><span class="team_2_1 player"></span> & <span class="team_2_2 player"></span>
+  <div id="view_timer" class="view" style="display: none">
+    <div class="message"></div>
+    <div class="text">You are not participating</div>
+    <div id="timer">Timer</div>
+    <div class="count">Player count: <span class="count-nr"></span></div>
+    <button class="iam-in btn">I'm in!</button>
+  </div>
+  <div id="view_participating" class="view" style="display: none">
+    <div class="text">You are participating</div>
+    <div class="message"></div>
+    <div id="ptimer">Timer</div>
+    <div class="count">Player count: <span class="count-nr"></span></div>
+    <button class="iam-out btn">I'm out!</button>
+  </div>
+  <div id="view_game" style="display: none" class="view">
+    <div class="text"> Ongoing game</div>
+    <div class="team_1 teams">
+      <div class="players-wrapper">
+        <span class="team_1_1 player"></span>
+        <div class="and"> &</div>
+        <span class="team_1_2 player"></span>
+      </div>
+      <button class="win btn"><i class="glyphicon glyphicon-thumbs-up winner"></i></button>
     </div>
+    <div class="vs">VS</div>
+    <div class="team_2 teams">
+      <div class="players-wrapper">
+        <span class="team_2_1 player"></span>
+        <div class="and"> &</div>
+        <span class="team_2_2 player"></span>
+      </div>
+      <button class="win btn"> <i class="glyphicon glyphicon-thumbs-up winner"></i></button>
+    </div>
+  </div>
 
-    <div id="view_spin" class="view" style="display: none">
-      <img src="images/3.gif"/>
-    </div>
+  <div id="view_spin" class="view" style="display: none">
+    <img src="images/3.gif"/>
+  </div>
 
-    <div id="view_message" class="view" style="display: none">
-      <div class="message"></div>
-    </div>
-  </body>
+  <div id="view_message" class="view" style="display: none">
+    <div class="message"></div>
+  </div>
+</div>
+
+<div id="score-wrapper" class="view" style="display: none">
+  <div class="score">
+
+    <table class="table table-hover score">
+      <thead id="score-body">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+</body>
 </html>
 
