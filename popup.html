@@ -4,27 +4,48 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title></title>
-  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-2.0.3.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <script src="js/bg.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+
 </head>
 <body>
-<div id="header-wrapper">
-  <div class="header-menu">
-    <span class="game">Game</span>
-    <span class="score">Score</span>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="http://ufc.fenomen.ee" target="_blank">UFC</a>
   </div>
-</div>
+  <div class="collapse navbar-collapse header-menu">
+    <ul class="nav navbar-nav">
+      <li class="active game">
+        <i class="glyphicon glyphicon-home"><span>Game</span></i>
+      </li>
+      <li class="score">
+        <i class="glyphicon glyphicon glyphicon-list"><span>Score</span></i>
+      </li>
+      <li class="volume">
+        <i class="glyphicon glyphicon glyphicon-volume-up"></i>
+
+      </li>
+    </ul>
+  </div>
+</nav>
 <div id="content-wrapper">
   <div id="view_register" class="view" style="display: none">
-    Email: <input class="email" type="text" size="20"><br/>
+    <p>Register</p>
 
-    <div class="message"></div>
+    <div class="input-group register">
+      <span class="input-group-addon">@</span>
+      <input class="email form-control" placeholder="Email" type="text"
+             size="20">
+    </div>
+    <div class="message alert alert-danger" style="display: none"></div>
     <button class="register btn">Register</button>
   </div>
 
   <div id="view_play" class="view" style="display: none">
-    <div class="user">Login User: <span class="name"></span></div>
+    <div class="user"><i class="glyphicon glyphicon-user"></i> <span class="name"></span></div>
     <button class="play btn">Create game</button>
   </div>
 
@@ -35,7 +56,6 @@
     <div class="count">Player count: <span class="count-nr"></span></div>
     <button class="iam-in btn">I'm in!</button>
   </div>
-
   <div id="view_participating" class="view" style="display: none">
     <div class="text">You are participating</div>
     <div class="message"></div>
@@ -43,25 +63,24 @@
     <div class="count">Player count: <span class="count-nr"></span></div>
     <button class="iam-out btn">I'm out!</button>
   </div>
-
   <div id="view_game" style="display: none" class="view">
-    <div class="text"> Ongoing game:</div>
+    <div class="text"> Ongoing game</div>
     <div class="team_1 teams">
-      <span class="team_1_1 player"></span>
-
-      <div class="and"> &</div>
-      <span class="team_1_2 player"></span>
-      <button class="win btn">Win</button>
-
+      <div class="players-wrapper">
+        <span class="team_1_1 player"></span>
+        <div class="and"> &</div>
+        <span class="team_1_2 player"></span>
+      </div>
+      <button class="win btn"><i class="glyphicon glyphicon-thumbs-up winner"></i></button>
     </div>
     <div class="vs">VS</div>
     <div class="team_2 teams">
-      <span class="team_2_1 player"></span>
-
-      <div class="and"> &</div>
-      <span class="team_2_2 player"></span>
-      <button class="win btn">Win</button>
-
+      <div class="players-wrapper">
+        <span class="team_2_1 player"></span>
+        <div class="and"> &</div>
+        <span class="team_2_2 player"></span>
+      </div>
+      <button class="win btn"> <i class="glyphicon glyphicon-thumbs-up winner"></i></button>
     </div>
   </div>
 
@@ -74,14 +93,20 @@
   </div>
 </div>
 
-<div id="score-wrapper"  class="view" style="display: none">
+<div id="score-wrapper" class="view" style="display: none">
   <div class="score">
-    <table id="score">
-      <tr>
-        <td>Name</td>
-        <td>Score</td>
-      </tr>
 
+    <table class="table table-hover score">
+      <thead id="score-body">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
     </table>
 
   </div>

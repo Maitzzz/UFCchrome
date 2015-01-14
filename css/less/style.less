@@ -1,30 +1,39 @@
 body {
-  font-family: Tahoma, Geneva, sans-serif;
-  min-width: 180px;
+  font-family: 'Signika', sans-serif;
+  width: 260px;
   transition: all 0.8s;
+  .navbar {
+    margin-bottom: 2px;
+  }
 
-  #header-wrapper {
-    border-bottom: 1px solid #cccccc;
-    margin-bottom: 5px;
-    clear: both;
-    width: 150px;
-    font-size: 15px;
-    height: 20px;
-    -webkit-animation: titleAnimation 0.8s;
-
-
-    .header-menu {
-      span {
-        margin:0px;
-        margin-left: 20px;
-        padding: 5px;
-        background: red;
+  .navbar-header {
+    a {
+      cursor: default;
+    }
+  }
+  .header-menu {
+    ul {
+      .volume {
+        margin-left: 3px;
+        font-size: 17px;
+      }
+      li {
+        cursor: default;
+        i {
+          padding: 5px;
+          margin-top: 10px;
+          span {
+            margin-left: 7px;
+          }
+        }
+        a {
+          padding: 10px;
+        }
       }
     }
-
   }
+
   #content-wrapper {
-    width: 180px;
     #status {
       display: none;
     }
@@ -37,16 +46,32 @@ body {
       margin-right: auto;
     }
 
-    #view_play {
-      button {
-        color: #ffffff;
-        background-color: #e31377;
-        border: none;
-        padding: 5px;
+    #view_register {
+      text-align: center;
 
-        &:hover {
-          background-color: #bd1063;
-        }
+      .register {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .alert {
+        margin-bottom: 0 !important;
+        border-radius: 0;
+        padding: 7px;
+      }
+      p {
+        font-size: 20px;
+        margin: 0;
+
+      }
+    }
+
+    #view_play {
+      .user {
+        margin-left: 10px;  
+      }
+
+      .play {
+        margin-top: 10px;
       }
 
       .user .name {
@@ -57,12 +82,9 @@ body {
     .btn {
       color: #ffffff;
       background-color: #e31377;
-      border: none;
-      padding: 5px;
+      border-radius: 0 !important;
       width: 100%;
-      font-weight: normal;
-      margin-top: 10px;
-
+      padding: 3px;
       &:hover {
         background-color: #bd1063;
       }
@@ -96,21 +118,29 @@ body {
 
     #view_game {
       text-align: center;
-      width: 250px;
+      width: 260px;
 
       .vs {
         font-weight: bold;
         font-size: 20px;
         padding-bottom: 5px;
-        padding-top: 12px;
+        padding-top: 18px;
         width: 30px;
         float: left;
       }
 
       .teams {
-        width: 110px;
+        width: 115px;
         float: left;
         margin-bottom: 10px;
+        .winner {
+          font-size: 15px;
+          position: relative;
+          bottom: 0;
+        }
+        .players-wrapper {
+          height: 70px;
+        }
       }
 
       .player {
@@ -134,14 +164,12 @@ body {
   }
 }
 
-
-
 @-webkit-keyframes titleAnimation {
-  0%,10% {
+  0%, 10% {
     opacity: 0;
     -webkit-transform: translateY(-4px);
   }
-  80%{
+  80% {
     -webkit-transform: translateY(0);
   }
   100% {

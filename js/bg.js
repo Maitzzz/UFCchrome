@@ -6,8 +6,9 @@
  var nodeUrl = 'http://ufc.mait.fenomen.ee';
  var apiUrl = 'http://ufc.mait.fenomen.ee';
  */
-var nodeUrl = 'http://ufc.mait.fenomen.ee';
-var apiUrl = 'http://ufc.mait.fenomen.ee';
+
+var apiUrl = 'http://ufc.fenomen.ee';
+var nodeUrl = 'http://192.168.1.2';
 
 function registerCallback(chrome_token) {
   if (chrome.runtime.lastError) {
@@ -37,7 +38,8 @@ function register(chrome_token) {
        view();
       }
       else {
-        $('.message', '#view_register').text('Registreerimine ebaõnnestus!');
+        $('.message', '#view_register').text('Registreerimine ebaõnnestus!').fadeIn();
+
       }
     }
   });
@@ -68,6 +70,7 @@ function play(email, type) {
 }
 
 function action_register() {
+  chrome.storage.local.set({mute: false});
   var senderId = "874260943469";
   chrome.gcm.register([senderId], registerCallback);
 }
@@ -77,6 +80,7 @@ function action_register() {
  */
 function view_register() {
   $('#view_spin').hide();
+  $('#header-wrapper').hide();
   $('.view').fadeOut();
 
   $('#view_register').fadeIn();
@@ -86,6 +90,7 @@ function view_register() {
  * Show create game view
  */
 function view_play() {
+  $('#header-wrapper').show();
 
   $('#view_spin').hide();
   $('.view').fadeOut();
@@ -100,6 +105,8 @@ function view_play() {
  * view yes/no button
  */
 function view_timer() {
+  $('#header-wrapper').show();
+
   $('#view_spin').hide();
   $('.view').hide();
   time_left(function (err, ret3) {
@@ -117,6 +124,8 @@ function view_timer() {
  * view yes/no button
  */
 function view_spin() {
+  $('#header-wrapper').show();
+
   $('.view').hide();
 
   $('#view_spin').show();
@@ -126,6 +135,8 @@ function view_spin() {
  * view current game participants
  */
 function view_game(data) {
+  $('#header-wrapper').show();
+
   $('#view_spin').hide();
   $('.view').fadeOut();
 
@@ -138,6 +149,8 @@ function view_game(data) {
 }
 
 function view_score() {
+  $('#header-wrapper').show();
+
 
   $('.view').fadeOut();
   $('#game-wrapper').fadeOut();
@@ -146,29 +159,27 @@ function view_score() {
     if (err) {
       console.log('tile left error');
     }
-    var rows = document.getElementById("score").getElementsByTagName("tr").length;
+    var rows = document.getElementById("score-body").getElementsByTagName("tr").length;
     if (ret3 && rows == 1) {
       var array = ret3.result.reverse();
-      var table = document.getElementById("score");
+      var table = document.getElementById("score-body");
       var arrayLength = array.length;
       for (var i = 0; i < arrayLength; i++) {
-        // alert(myStringArray[i]);
         var row = table.insertRow(i+1);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
-        cell1.innerHTML = array[i].player;
-        cell2.innerHTML = array[i].score;
-
-      }
+        var cell3 = row.insertCell(2);
+        cell1.innerHTML = array[i].position;
+        cell2.innerHTML = array[i].player;
+        cell3.innerHTML = array[i].score;      }
     }
     $('#score-wrapper').fadeIn(1000);
   });
-
-
-
 }
 
 function view_message(message) {
+  $('#header-wrapper').show();
+
   $('#view_spin').hide();
   $('.view').hide();
   $('.message', '#view_message').text(message);
@@ -179,6 +190,8 @@ function view_message(message) {
  * View if user participates in game
  */
 function view_participating() {
+  $('#header-wrapper').show();
+
   $('#view_spin').hide();
   $('.view').fadeOut();
   time_left(function (err, ret3) {
@@ -191,6 +204,8 @@ function view_participating() {
 }
 
 function view_error() {
+  $('#header-wrapper').show();
+
   view_message('Ei saa serveriga ühendust')
 }
 
@@ -232,6 +247,7 @@ $(document).ready(function () {
   view();
 
   $('#view_participating button.iam-out').click(function () {
+    newEvent();
     chrome.storage.local.get('email', function (data) {
       removePlayer(data.email);
     });
@@ -248,6 +264,7 @@ $(document).ready(function () {
   });
 
   $('#view_timer button.iam-in').click(function () {
+    newEvent();
     chrome.storage.local.get('email', function (data) {
       action_iam_in(data.email, true);
     });
@@ -269,6 +286,24 @@ $(document).ready(function () {
 
   $('.header-menu .game').click(function () {
     view();
+  });
+
+   $('.navbar .volume').click(function () {
+     if($('.navbar .volume i').hasClass('glyphicon-volume-up')) {
+       $('.navbar .volume i').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
+       chrome.storage.local.set({mute: true});
+     } else {
+       $('.navbar .volume i').removeClass('glyphicon-volume-off').addClass('glyphicon-volume-up');
+       chrome.storage.local.set({mute: false});
+     }
+   });
+
+  chrome.storage.local.get('mute', function (data) {
+    if(data.mute) {
+      $('.navbar .volume i').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
+    }    else {
+      $('.navbar .volume i').removeClass('glyphicon-volume-off').addClass('glyphicon-volume-off');
+    }
   });
 
 });
@@ -465,6 +500,7 @@ function time_left(callback) {
 }
 
 function view() {
+
   view_spin();
   player_registered(function (err, ret) {
     if (err) {
@@ -549,4 +585,9 @@ function getScore(callback) {
       callback(true);
     }
   });
+}
+
+function newEvent() {
+  var otherWindows = chrome.extension.getBackgroundPage();
+  otherWindows.mute();
 }

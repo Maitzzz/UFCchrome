@@ -1,19 +1,20 @@
-window.addEventListener("load", function () {
-  chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
-});
-
 /** LIVE SEIS
  * var nodeUrl = 'http://ufc.mait.fenomen.ee';
  * @type {string}
  */
 
-
 /** ARENDUS SEIS
   var nodeUrl = 'http://192.168.1.2';
  */
 
-var nodeUrl = 'http://ufc.mait.fenomen.ee';
+var nodeUrl = 'http://192.168.1.2';
 var status;
+
+document.write('<audio id="player" src="http://ufc.fenomen.ee/sites/default/files/sound.mp3"></audio>');
+
+window.addEventListener("load", function () {
+  chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
+});
 
 // Returns a new notification ID used in the notification.
 function getNotificationId() {
@@ -33,17 +34,27 @@ function messageReceived(message) {
       invitation_popup(message);
       status = true;
       badgeLoop();
-
+      chrome.storage.local.get('mute', function (data) {
+        if(!data.mute){
+          document.getElementById('player').play();
+        }
+      });
       break;
 
     case 'match':
       message_popup(message);
       createBadge('');
+      mute();
       break;
 
     case 'end':
+      mute();
       createBadge('');
       status = false;
+      break;
+
+    case 'mute':
+      mute();
       break;
   }
 }
@@ -52,6 +63,7 @@ function messageReceived(message) {
 chrome.gcm.onMessage.addListener(messageReceived);
 
 function notificationBtnClick(notID, iBtn) {
+  document.getElementById('player').pause();
   if (iBtn == 0) {
     eventResponse(0);
   }
@@ -80,9 +92,6 @@ function eventResponse(answer) {
       }
     });
   });
-
-  //set answeret TRUE
-  chrome.storage.local.set({participating: true});
 }
 
 function invitation_popup(message) {
@@ -166,3 +175,7 @@ function getCount(callback) {
 $(document).ready(function () {
     badgeLoop();
 });
+
+function mute() {
+  document.getElementById('player').pause();
+}
