@@ -1,34 +1,41 @@
 /** LIVE SEIS
- * var nodeUrl = 'http://ufc.mait.fenomen.ee';
+  var nodeUrl = 'http://ufc.mait.fenomen.ee';
  * @type {string}
  */
 
 /** ARENDUS SEIS
   var nodeUrl = 'http://192.168.1.2';
+
  */
 
-var nodeUrl = 'http://192.168.1.2';
+var development = false;
+
+if (development)  {
+  var nodeUrl = 'http://ufc.mait.fenomen.ee';
+} else {
+  var nodeUrl = 'http://192.168.1.2';
+}
+
 var status;
 
-document.write('<audio id="player" src="http://ufc.fenomen.ee/sites/default/files/sound.mp3"></audio>');
+document.write('<audio id="player" src="http://ufc.fenomen.ee/sites/default/files/sound.mp3" loop="true"></audio>');
 
 window.addEventListener("load", function () {
   chrome.notifications.onButtonClicked.addListener(notificationBtnClick);
 });
 
-// Returns a new notification ID used in the notification.
-function getNotificationId() {
-  var id = Math.floor(Math.random() * 9007199254740992) + 1;
-  return id.toString();
-}
-
 function messageReceived(message) {
 
-  switch (message.data.type) {
+  chrome.storage.local.get('notifications', function (data) {
+    if(data.notifications){
+      return;
+    }
+
+    switch (message.data.type) {
     case 'fail':
       message_popup(message);
       createBadge('');
-      break;
+      break;f
 
     case 'call':
       invitation_popup(message);
@@ -37,14 +44,16 @@ function messageReceived(message) {
       chrome.storage.local.get('mute', function (data) {
         if(!data.mute){
           document.getElementById('player').play();
+          var volume =  document.getElementById('player');
+          volume.volume = 0.3;
         }
       });
       break;
 
     case 'match':
-      message_popup(message);
-      createBadge('');
-      mute();
+        message_popup(message);
+        createBadge('');
+        mute();
       break;
 
     case 'end':
@@ -53,10 +62,8 @@ function messageReceived(message) {
       status = false;
       break;
 
-    case 'mute':
-      mute();
-      break;
   }
+  });
 }
 
 // Set up a listener for GCM message event.
