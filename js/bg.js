@@ -1,14 +1,20 @@
 /**
-   var apiUrl = 'http://ufc.fenomen.ee';
-   var nodeUrl = 'http://192.168.1.2';
+
  */
 /**
  var nodeUrl = 'http://ufc.mait.fenomen.ee';
  var apiUrl = 'http://ufc.mait.fenomen.ee';
  */
 
-var apiUrl = 'http://ufc.fenomen.ee';
-var nodeUrl = 'http://192.168.1.2';
+var development = false;
+
+if (development)  {
+  var nodeUrl = 'http://ufc.mait.fenomen.ee';
+  var apiUrl = 'http://ufc.mait.fenomen.ee';
+} else {
+  var apiUrl = 'http://ufc.fenomen.ee';
+  var nodeUrl = 'http://192.168.1.2';
+}
 
 function registerCallback(chrome_token) {
   if (chrome.runtime.lastError) {
@@ -149,12 +155,9 @@ function view_game(data) {
 }
 
 function view_score() {
+  view_spin();
   $('#header-wrapper').show();
 
-
-  $('.view').fadeOut();
-  $('#game-wrapper').fadeOut();
-  $('#score-wrapper').hide();
   getScore(function (err, ret3) {
     if (err) {
       console.log('tile left error');
@@ -173,7 +176,8 @@ function view_score() {
         cell2.innerHTML = array[i].player;
         cell3.innerHTML = array[i].score;      }
     }
-    $('#score-wrapper').fadeIn(1000);
+    $('.view').hide();
+    $('#score-wrapper').fadeIn(300);
   });
 }
 
@@ -247,7 +251,7 @@ $(document).ready(function () {
   view();
 
   $('#view_participating button.iam-out').click(function () {
-    newEvent();
+    action_mute();
     chrome.storage.local.get('email', function (data) {
       removePlayer(data.email);
     });
@@ -264,7 +268,7 @@ $(document).ready(function () {
   });
 
   $('#view_timer button.iam-in').click(function () {
-    newEvent();
+    action_mute();
     chrome.storage.local.get('email', function (data) {
       action_iam_in(data.email, true);
     });
@@ -289,6 +293,7 @@ $(document).ready(function () {
   });
 
    $('.navbar .volume').click(function () {
+     action_mute();
      if($('.navbar .volume i').hasClass('glyphicon-volume-up')) {
        $('.navbar .volume i').removeClass('glyphicon-volume-up').addClass('glyphicon-volume-off');
        chrome.storage.local.set({mute: true});
@@ -306,6 +311,27 @@ $(document).ready(function () {
     }
   });
 
+  $('.navbar .notification').click(function () {
+    if($('.navbar .notification i').hasClass('glyphicon-ok')) {
+      notificationsofIcon(false);
+      $('.navbar .notification i').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+      chrome.storage.local.set({notifications: true});
+    } else {
+      notificationsofIcon(true);
+      $('.navbar .notification i').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+      chrome.storage.local.set({notifications: false});
+    }
+  });
+
+  chrome.storage.local.get('notifications', function (data) {
+    if(data.notifications) {
+      notificationsofIcon(false);
+      $('.navbar .notification i').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+    }    else {
+      notificationsofIcon(true);
+      $('.navbar .notification i').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+    }
+  });
 });
 
 function player_registered(stateCallback) {
@@ -332,16 +358,11 @@ function player_registered(stateCallback) {
 
 function game_on(stateCallback) {
 
-  var data = {
-    'test': 'test'
-  };
-
   jQuery.ajax({
     type: 'POST',
     url: apiUrl + '/api/get-players',
     dataType: 'json',
     contentType: "application/json",
-    data: JSON.stringify(data),
     success: function (response) {
       stateCallback(false, response);
     },
@@ -353,22 +374,16 @@ function game_on(stateCallback) {
 }
 
 function timer_on(callback) {
-  var data = {
-    'test': 'test'
-  };
+
   jQuery.ajax({
     type: 'POST',
     url: nodeUrl + ':3000/timer-running',
     dataType: 'json',
     contentType: "application/json",
-    data: JSON.stringify(data),
     success: function (response) {
       callback(false, response);
     },
     error: function (data, i, o) {
-      console.log(data);
-      console.log(i);
-      console.log(o);
       callback(true);
     }
   });
@@ -461,8 +476,8 @@ function countdown(elementName, minutes, seconds) {
           createBadge(ret3);
         }
       }
-
     });
+
     msLeft = endTime - (+new Date);
     if (msLeft < 100) {
         view_message("Time's UP!");
@@ -520,7 +535,6 @@ function view() {
           view_game(ret1.result);
         } else {
           timer_on(function (err, ret4) {
-            createBadge(':)');
             if (err) {
               console.log('error timer on ' + ret4);
               view_error();
@@ -587,7 +601,18 @@ function getScore(callback) {
   });
 }
 
-function newEvent() {
+function action_mute() {
   var otherWindows = chrome.extension.getBackgroundPage();
   otherWindows.mute();
+}
+
+function notificationsofIcon(state) {
+  if(state) {
+    var path = '../images/ic_launcher.png'
+  } else {
+    path = '../images/ic_launcher_gray.png'
+  }
+  chrome.browserAction.setIcon({
+    path: path
+  });
 }

@@ -7,14 +7,19 @@ body .navbar {
   margin-bottom: 2px;
 }
 body .navbar-header a {
-  cursor: default;
+  cursor: pointer;
+  margin-top: 8px;
+  padding: 7px 7px;
 }
 body .header-menu ul .volume {
-  margin-left: 3px;
+  margin-left: 14px;
   font-size: 17px;
 }
+body .header-menu ul .notification {
+  margin-left: 3px;
+}
 body .header-menu ul li {
-  cursor: default;
+  cursor: pointer;
 }
 body .header-menu ul li i {
   padding: 5px;
@@ -54,6 +59,7 @@ body #content-wrapper #view_register p {
   margin: 0;
 }
 body #content-wrapper #view_play .user {
+  margin-top: 10px;
   margin-left: 10px;
 }
 body #content-wrapper #view_play .play {

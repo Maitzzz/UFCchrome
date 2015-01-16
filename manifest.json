@@ -1,10 +1,12 @@
 {
   "name": "UFC",
   "description": "UFC",
-  "version": "0.1.4",
+  "version": "0.2.5",
   "permissions": ["gcm", "storage", "notifications"],
+  "icons": { "128": "images/ic_launcher.png" },
   "browser_action": {
     "default_title": "UFC",
+    "default_icon": "images/ic_launcher.png",
     "default_popup":"popup.html"
   },
   "manifest_version": 2,
@@ -20,7 +22,6 @@
     "css": [ "css/empty.css" ],
     "run_at": "document_start",
     "matches": [ "<all_urls>" ]
-
   }]
 }
 
